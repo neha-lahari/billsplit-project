@@ -2,11 +2,11 @@
 
 # BillSplit – Smart Expense Sharing App
 
-BillSplit is a full-stack web application that helps users split expenses, manage groups, track balances, and settle payments easily. It is inspired by apps like Splitwise, built with a modern MERN stack.
+BillSplit is a full-stack web application that helps users split expenses, manage groups, track balances, and settle payments easily. It is inspired by apps like Splitwise and built using the MERN stack.
 
 ---
 
-## **Project Structure**
+## Project Structure
 
 This repository contains two main folders at the root:
 
@@ -14,7 +14,6 @@ This repository contains two main folders at the root:
 `server/` — Backend Node.js/Express API
 
 ```
-
 bill-split/
 ├── client/              # Frontend (React)
 │   └── src/
@@ -31,18 +30,19 @@ bill-split/
 │
 └── README.md
 ```
+
 ---
 
-## **Getting Started**
+## Getting Started
 
 ### Prerequisites
 
-Node.js
-npm
+* Node.js
+* npm
 
 ---
 
-## **Setup Instructions**
+## Setup Instructions
 
 ### 1. Clone Repository
 
@@ -60,12 +60,12 @@ cd server
 npm install
 ```
 
-Create `.env` file:
+Create a `.env` file:
 
 ```
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/billsplit
-JWT_secret=your_secret_key
+JWT_SECRET=your_secret_key
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_gmail_app_password
 FRONTEND_URL=http://localhost:3000
@@ -91,99 +91,98 @@ npm start
 
 ---
 
-## **Features**
+## Features
 
 ### Authentication
 
-Email + Password login
-Google OAuth login
-JWT-based authentication
-Forgot Password with email reset link
-Secure password reset flow (token-based)
+* Email + Password login
+* Google OAuth login
+* JWT-based authentication
+* Forgot Password with email reset link
+* Secure password reset flow (token-based)
 
 ---
 
 ### Friends System
 
-Add and manage friends
-View friend list with profile details
+* Add and manage friends
+* View friend list with profile details
 
 ---
 
 ### Group Expense Management
 
-Create groups
-Add members to groups
-Add expenses within groups
-Automatic balance calculation
-See who owes whom
+* Create groups
+* Add members to groups
+* Add expenses within groups
+* Automatic balance calculation
+* See who owes whom
 
 ---
 
 ### Expense Tracking
 
-Split expenses equally
-Category-wise expense tracking
-Per-group balance breakdown
-Real-time updates
+* Split expenses equally
+* Category-wise expense tracking
+* Per-group balance breakdown
+* Real-time updates
 
 ---
 
 ### Dashboard
 
-Overview of groups
-Recent activity feed
-Quick navigation to groups & friends
+* Overview of groups
+* Recent activity feed
+* Quick navigation to groups and friends
 
 ---
 
 ### Profile
 
-Update profile info
-Upload profile picture
+* Update profile information
+* Upload profile picture
 
 ---
 
-### **Authentication Flow**
+## Authentication Flow
 
-User registers or logs in
-Server generates JWT token
-Token stored in localStorage
-Protected routes use token validation
-Forgot password sends email reset link
-Reset password updates hashed password
-
----
-
-## **Forgot Password Flow**
-
-User enters email
-Server generates reset token
-Email sent via Nodemailer (Gmail SMTP)
-User clicks link → redirected to reset page
-New password is saved securely (bcrypt hashed)
+* User registers or logs in
+* Server generates JWT token
+* Token stored in localStorage
+* Protected routes use token validation
+* Forgot password sends email reset link
+* Reset password updates hashed password
 
 ---
 
-## **Tech Stack**
+## Forgot Password Flow
+
+* User enters email
+* Server generates reset token
+* Email sent via Nodemailer (Gmail SMTP)
+* User clicks link and is redirected to reset page
+* New password is saved securely (bcrypt hashed)
+
+---
+
+## Tech Stack
 
 ### Frontend
 
-React.js
-React Router DOM
-Tailwind CSS
-Context API / Hooks
-Fetch API
+* React.js
+* React Router DOM
+* Tailwind CSS
+* Context API / Hooks
+* Fetch API
 
 ### Backend
 
-Node.js
-Express.js
-MongoDB + Mongoose
-JWT Authentication
-bcrypt.js
-Nodemailer (for email service)
-Passport.js (Google OAuth)
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* JWT Authentication
+* bcrypt.js
+* Nodemailer (for email service)
+* Passport.js (Google OAuth)
 
 ---
-
