@@ -76,9 +76,6 @@ export default function AddExpense() {
 
         let participants = [];
 
-        // =======================
-        // EQUAL SPLIT
-        // =======================
         if (splitType === "equal") {
 
             if (!paidBy)
@@ -96,9 +93,6 @@ export default function AddExpense() {
             }));
         }
 
-        // =======================
-        // EXACT SPLIT (FIXED)
-        // =======================
         else if (splitType === "exact") {
 
             if (selectedPayers.length === 0)
@@ -121,9 +115,6 @@ export default function AddExpense() {
             }));
         }
 
-        // =======================
-        // PERCENTAGE SPLIT
-        // =======================
         else if (splitType === "percentage") {
 
             const totalPercent = selectedParticipants.reduce(

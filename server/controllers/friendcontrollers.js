@@ -1,6 +1,5 @@
 const User = require('../models/user');
 
-// Search users
 exports.search_user = async (req, res) => {
     const searchFriend = req.query.query;
     const currentUserId = req.user.userId;
@@ -18,7 +17,7 @@ exports.search_user = async (req, res) => {
                         { email: { $regex: searchFriend, $options: 'i' } }
                     ]
                 },
-                { _id: { $ne: currentUserId } } // Only exclude yourself
+                { _id: { $ne: currentUserId } } 
             ]
         }).select('-password');
 
@@ -29,7 +28,6 @@ exports.search_user = async (req, res) => {
     }
 };
 
-// Send friend request
 exports.send_request = async (req, res) => {
     const senderID = req.user.userId;
     const receiverID = req.params.id;
@@ -42,7 +40,6 @@ exports.send_request = async (req, res) => {
         const receiver = await User.findById(receiverID);
         if (!sender || !receiver) return res.status(404).json({ message: "User not found" });
 
-        // Already friends or request exists
         if (receiver.friendRequests.includes(senderID) || sender.sentRequests.includes(receiverID))
             return res.status(400).json({ message: "Request already sent" });
 
@@ -62,7 +59,6 @@ exports.send_request = async (req, res) => {
     }
 };
 
-// Accept friend request
 exports.accept_request = async (req, res) => {
     const myID = req.user.userId;
     const senderID = req.params.id;
@@ -91,7 +87,6 @@ exports.accept_request = async (req, res) => {
     }
 };
 
-// Reject friend request
 exports.reject_request = async (req, res) => {
     const myID = req.user.userId;
     const senderID = req.params.id;
@@ -114,7 +109,6 @@ exports.reject_request = async (req, res) => {
     }
 };
 
-// Unfriend
 exports.unFriend = async (req, res) => {
     const myID = req.user.userId;
     const friendID = req.params.id;
@@ -137,7 +131,8 @@ exports.unFriend = async (req, res) => {
     }
 };
 
-// Cancel sent request
+
+
 exports.cancel_request = async (req, res) => {
     const senderID = req.user.userId;
     const receiverID = req.params.id;
@@ -160,7 +155,6 @@ exports.cancel_request = async (req, res) => {
     }
 };
 
-// Get friend status
 exports.getFriendStatus = async (req, res) => {
     const myID = req.user.userId;
 

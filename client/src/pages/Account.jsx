@@ -43,8 +43,6 @@ function Account() {
 
     return (
         <div className="max-w-3xl mx-auto text-slate-200 space-y-8">
-
-            {/* Title */}
             <div>
                 <h2 className="text-xl font-semibold text-green-300">
                     Account
@@ -97,7 +95,6 @@ function Account() {
                 </div>
             </div>
 
-            {/* Preferences */}
             <div>
                 <h4 className="text-sm text-slate-400 mb-3">Preferences</h4>
                 <div className="bg-slate-800/60 border border-green-900/30 rounded-2xl divide-y divide-slate-700">
@@ -113,7 +110,6 @@ function Account() {
                 </div>
             </div>
 
-            {/* Feedback */}
             <div>
                 <h4 className="text-sm text-slate-400 mb-3">Feedback</h4>
                 <div className="bg-slate-800/60 border border-green-900/30 rounded-2xl divide-y divide-slate-700">

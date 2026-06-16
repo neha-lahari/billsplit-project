@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/start.css";
+import fingerprint from "../assets/fingerprint.png";
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -26,11 +27,8 @@ export default function ForgotPassword() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.message);
 
-            // ✅ extract token from resetLink
-            const token = data.resetLink.split("/").pop();
-
-            // ✅ redirect user to reset password page
-            navigate(`/reset-password/${token}`);
+            alert("Password reset link sent to your email.");
+            navigate("/login");
 
         } catch (err) {
             setError(err.message || "Something went wrong");
@@ -40,39 +38,94 @@ export default function ForgotPassword() {
     };
 
     return (
-        <div className="start-container">
-            <h1 className="title">Forgot Password</h1>
-            <p className="subtitle">
-                Enter your registered email to reset your password
-            </p>
+        <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            <div className="w-full max-w-md bg-black/50 border border-green-500/30 rounded-2xl p-8 flex flex-col gap-5">
 
-            <form onSubmit={handleSubmit} className="form">
-                <input
-                    type="email"
-                    placeholder="Enter your registered email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
+                {error && (
+                    <div className="bg-red-500/20 text-red-400 text-sm px-4 py-2 rounded-lg text-center">
+                        {error}
+                    </div>
+                )}
 
-                <button type="submit" className="start-btn" disabled={loading}>
-                    {loading ? "Redirecting..." : "Continue"}
-                </button>
-            </form>
+                {/* Logo */}
+                <div className="text-center">
+                    <img
+                        src={fingerprint}
+                        alt="Fingerprint"
+                        className="w-16 mx-auto mb-3"
+                    />
 
-            <p
-                style={{
-                    marginTop: "15px",
-                    color: "#00e681",
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                }}
-                onClick={() => navigate("/")}
-            >
-                Back to Login
-            </p>
+                    <h1 className="text-green-400 text-2xl font-bold">
+                        Forgot Password
+                    </h1>
+
+                    <p className="text-green-300/60 text-sm mt-2">
+                        Enter your registered email address and we'll send you
+                        a password reset link.
+                    </p>
+                </div>
+
+                {/* Form */}
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-4"
+                >
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="
+                            bg-black/30
+                            border border-green-500/30
+                            text-green-100
+                            placeholder-green-700
+                            rounded-lg
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-1
+                            focus:ring-green-500
+                        "
+                    />
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="
+                            bg-green-500
+                            hover:bg-green-400
+                            disabled:opacity-60
+                            text-black
+                            font-bold
+                            py-3
+                            rounded-lg
+                            transition-colors
+                        "
+                    >
+                        {loading ? "Sending Link..." : "Send Reset Link"}
+                    </button>
+                </form>
+
+                {/* Back to Login */}
+                <div className="text-center">
+                    <button
+                        onClick={() => navigate("/login")}
+                        className="
+                            text-green-400
+                            hover:text-green-300
+                            underline
+                            text-sm
+                            transition-colors
+                        "
+                    >
+                        Back to Login
+                    </button>
+                </div>
+
+            </div>
         </div>
     );
 }

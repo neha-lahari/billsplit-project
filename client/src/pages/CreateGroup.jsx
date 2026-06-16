@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 export default function CreateGroup() {
     const [groupName, setGroupName] = useState("");
     const [groupType, setGroupType] = useState("");
-    const [friendsList, setFriendsList] = useState([]);// all friends
-    const [selectedFriends, setSelectedFriends] = useState([]);// usernames of selected friends
+    const [friendsList, setFriendsList] = useState([]);
+    const [selectedFriends, setSelectedFriends] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
@@ -80,7 +80,6 @@ export default function CreateGroup() {
     return (
         <div className="max-w-3xl mx-auto text-slate-200">
 
-            {/* Top Bar */}
             <div className="flex items-center justify-between mb-10">
                 <button
                     onClick={() => navigate(-1)}
@@ -172,7 +171,6 @@ export default function CreateGroup() {
                     </div>
                 </div>
 
-                {/* Hint */}
                 <p className="text-xs text-slate-500">
                     Members will be able to add expenses and settle balances once the group is created.
                 </p>

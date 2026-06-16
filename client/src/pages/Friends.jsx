@@ -10,7 +10,6 @@ export default function Friends() {
     const [error, setError] = useState("");
     const token = localStorage.getItem("token");
 
-    // Fetch all friend data on mount
     useEffect(() => {
         const fetchFriendData = async () => {
             try {
@@ -29,7 +28,6 @@ export default function Friends() {
         fetchFriendData();
     }, [token]);
 
-    // Search users
     const handleSearch = async () => {
         if (!search.trim()) {
             setSearchResults([]);
@@ -57,7 +55,6 @@ export default function Friends() {
         }
     };
 
-    // Add friend
     const handleAddFriend = async (userId) => {
         try {
             const res = await fetch(`http://localhost:5000/api/friends/request/${userId}`, {
@@ -81,7 +78,6 @@ export default function Friends() {
         }
     };
 
-    // Cancel sent request
     const handleCancelRequest = async (userId) => {
         try {
             const res = await fetch(`http://localhost:5000/api/friends/cancel/${userId}`, {
@@ -101,7 +97,6 @@ export default function Friends() {
         }
     };
 
-    // Accept friend request
     const handleAccept = async (userId) => {
         try {
             const res = await fetch(`http://localhost:5000/api/friends/accept/${userId}`, {
@@ -124,7 +119,6 @@ export default function Friends() {
         }
     };
 
-    // Reject friend request
     const handleReject = async (userId) => {
         try {
             const res = await fetch(`http://localhost:5000/api/friends/reject/${userId}`, {
@@ -140,7 +134,6 @@ export default function Friends() {
         }
     };
 
-    // Unfriend
     const handleUnfriend = async (userId) => {
         if (!window.confirm("Are you sure you want to unfriend this person?")) return;
 
@@ -158,7 +151,6 @@ export default function Friends() {
         }
     };
 
-    // Determine button state
     const getButtonState = (userId) => {
         if (friends.some(f => f._id === userId)) return "friend";
         if (sentRequests.some(r => r._id === userId)) return "pending";

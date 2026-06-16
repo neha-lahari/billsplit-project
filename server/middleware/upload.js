@@ -3,7 +3,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
     destination: "uploads/",
-    filename: (req, file, cb) => { //The filename property is a function that determines the name of the file to be saved.
+    filename: (req, file, cb) => {
         cb(null, `${req.userId}-${Date.now()}${path.extname(file.originalname)}`);
     }
 });

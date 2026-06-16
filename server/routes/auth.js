@@ -3,9 +3,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-/* ===========================
-   GOOGLE LOGIN
-=========================== */
+//google login
 router.get(
     "/google/login",
     passport.authenticate("google-login", { scope: ["profile", "email"] })
@@ -31,7 +29,11 @@ router.get(
                 `);
             }
 
-            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+            const token = jwt.sign(
+                { userId: user._id },
+                process.env.JWT_secret,
+                { expiresIn: "7d" }
+            );
 
             res.send(`
                 <script>
@@ -63,9 +65,7 @@ router.get(
     }
 );
 
-/* ===========================
-   GOOGLE REGISTER
-=========================== */
+//google register
 router.get(
     "/google/register",
     passport.authenticate("google-register", { scope: ["profile", "email"] })
@@ -97,8 +97,8 @@ router.get(
             });
 
             const token = jwt.sign(
-                { id: newUser._id },
-                process.env.JWT_SECRET,
+                { userId: newUser._id },
+                process.env.JWT_secret,
                 { expiresIn: "7d" }
             );
 
@@ -133,9 +133,7 @@ router.get(
 );
 
 
-/* ===========================
-   FAILURE ROUTE
-=========================== */
+//failure route
 router.get("/google/failure", (req, res) => {
     res.status(400).json({ error: "Authentication failed." });
 });

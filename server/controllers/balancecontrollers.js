@@ -57,7 +57,7 @@ exports.Balances = async (req, res) => {
             else if (amt > 0) creditors.push({ uid, amt });
         }
 
-        // 🔥 Sort for cleaner matching
+        // Sort for cleaner matching
         debtors.sort((a, b) => b.amt - a.amt);
         creditors.sort((a, b) => b.amt - a.amt);
 

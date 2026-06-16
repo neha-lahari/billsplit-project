@@ -16,7 +16,8 @@ exports.getActivities = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-// DELETE
+
+
 exports.deleteActivity = async (req, res) => {
     try {
         const activity = await Activity.findById(req.params.id);

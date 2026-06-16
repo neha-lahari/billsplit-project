@@ -13,7 +13,6 @@ function AddMembersToGroup() {
     useEffect(() => {
         const fetchFriendsAndGroup = async () => {
             try {
-                // Get group details first
                 const groupRes = await fetch(`http://localhost:5000/api/groups/${groupId}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
@@ -25,14 +24,12 @@ function AddMembersToGroup() {
                 const groupData = await groupRes.json();
                 const existingMemberNames = groupData.group.members.map(m => m.username);
 
-                // Get user's friends - adjust the endpoint based on your actual API
                 let friendRes;
                 try {
                     friendRes = await fetch("http://localhost:5000/api/users/friends", {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                     });
                 } catch (err) {
-                    // Try alternative endpoint if first one fails
                     friendRes = await fetch("http://localhost:5000/api/friends", {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                     });
@@ -44,7 +41,6 @@ function AddMembersToGroup() {
 
                 const friendData = await friendRes.json();
                 
-                // Handle different response formats
                 let friends = [];
                 if (Array.isArray(friendData.friends)) {
                     friends = friendData.friends;

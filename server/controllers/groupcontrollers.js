@@ -2,7 +2,6 @@ const Group = require("../models/groups");
 const User = require("../models/User");
 const Activity = require("../models/activity");
 
-// Create new group
 exports.createGroup = async (req, res) => {
     const { name, members = [] } = req.body;
     const user = req.user.userId;
@@ -46,7 +45,7 @@ exports.createGroup = async (req, res) => {
     }
 };
 
-// Add members to existing group
+
 exports.addMembers = async (req, res) => {
     const groupId = req.params.id;
     const { members = [] } = req.body;
@@ -58,12 +57,10 @@ exports.addMembers = async (req, res) => {
             return res.status(404).json({ message: "Group not found" });
         }
 
-        // Only group creator can add members
         if (group.createdBy.toString() !== user) {
             return res.status(403).json({ message: "Only group creator can add members" });
         }
 
-        // Get user's friends
         const me = await User.findById(user).populate('friends', 'username');
         if (!me) {
             return res.status(404).json({ message: "User not found" });
@@ -75,11 +72,9 @@ exports.addMembers = async (req, res) => {
             return res.status(400).json({ message: "Only friends can be added", notFriends });
         }
 
-        // Get user IDs of members to add
         const selectedUsers = await User.find({ username: { $in: members } });
         const memberIds = selectedUsers.map(u => u._id);
 
-        // Filter out members already in group
         const existingMemberIds = group.members.map(m => m.toString());
         const newMemberIds = memberIds.filter(id => !existingMemberIds.includes(id.toString()));
 
@@ -87,17 +82,14 @@ exports.addMembers = async (req, res) => {
             return res.status(400).json({ message: "All selected members are already in the group" });
         }
 
-        // Add new members to group
         group.members = [...group.members, ...newMemberIds];
         await group.save();
 
-        // Add group to new members' groups list
         await User.updateMany(
             { _id: { $in: newMemberIds } },
             { $push: { groups: group._id } }
         );
 
-        // Create activity for each new member added
         for (let memberId of newMemberIds) {
             Activity.create({
                 user: req.user.userId,
@@ -108,7 +100,6 @@ exports.addMembers = async (req, res) => {
             }).catch(err => console.error("Activity logging failed:", err));
         }
 
-        // Populate members for response
         await group.populate("members", "username");
         await group.populate("createdBy", "username");
 
@@ -118,7 +109,7 @@ exports.addMembers = async (req, res) => {
     }
 };
 
-// Remove member
+
 exports.removeMem = async (req, res) => {
     const groupId = req.params.id;
     const { memberId } = req.body;
@@ -158,7 +149,7 @@ exports.removeMem = async (req, res) => {
     }
 };
 
-// Delete group
+
 exports.deleteGroup = async (req, res) => {
     const groupId = req.params.id;
     const user = req.user.userId;
@@ -193,7 +184,6 @@ exports.deleteGroup = async (req, res) => {
     }
 };
 
-// Show existing groups
 exports.MyGroups = async (req, res) => {
     try {
         const me = await User.findById(req.user.userId).populate({
@@ -220,7 +210,6 @@ exports.MyGroups = async (req, res) => {
     }
 };
 
-// Show group details by ID
 exports.getGroupById = async (req, res) => {
     const groupId = req.params.id;
 
@@ -239,7 +228,6 @@ exports.getGroupById = async (req, res) => {
     }
 };
 
-// Get group details
 exports.getGroupDetails = async (req, res) => {
     const groupId = req.params.id;
 

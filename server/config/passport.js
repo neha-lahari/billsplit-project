@@ -1,7 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-// ---------- GOOGLE LOGIN STRATEGY ----------
+// google login strategy 
 passport.use(
     "google-login",
     new GoogleStrategy(
@@ -16,7 +16,7 @@ passport.use(
     )
 );
 
-// ---------- GOOGLE REGISTER STRATEGY ----------
+//google register strategy
 passport.use(
     "google-register",
     new GoogleStrategy(

@@ -4,7 +4,7 @@ const User = require("../models/User");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
-// ---------------- REGISTER ----------------
+
 exports.registerUser = async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -12,9 +12,15 @@ exports.registerUser = async (req, res) => {
         const hashedPw = await bcrypt.hash(password, 10);
         const user = new User({ username, email, password: hashedPw });
         await user.save();
+        const token = jwt.sign(
+            { userId: user._id },
+            process.env.JWT_secret,
+            { expiresIn: "1d" }
+        );
 
         res.status(201).json({
             message: "User registered",
+            token,
             user: {
                 _id: user._id,
                 username: user.username,
@@ -27,7 +33,6 @@ exports.registerUser = async (req, res) => {
     }
 };
 
-// ---------------- LOGIN ----------------
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
@@ -61,7 +66,6 @@ exports.loginUser = async (req, res) => {
     }
 };
 
-// ---------------- GET PROFILE ----------------
 exports.getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.userId).select(
@@ -74,7 +78,7 @@ exports.getProfile = async (req, res) => {
     }
 };
 
-// ---------------- UPDATE PROFILE ----------------
+
 exports.updateProfile = async (req, res) => {
     try {
         const { username, email } = req.body;
@@ -91,32 +95,39 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
-// ---------------- FORGOT PASSWORD ----------------
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
 
     try {
         const user = await User.findOne({ email });
+
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({
+                message: "User not found"
+            });
         }
 
-        // Generate raw token
+        if (user.googleId) {
+            return res.status(400).json({
+                message: "This account uses Google Sign-In. Please login with Google."
+            });
+        }
+
         const resetToken = crypto.randomBytes(32).toString("hex");
 
-        // Hash token before saving
         const hashedToken = crypto
             .createHash("sha256")
             .update(resetToken)
             .digest("hex");
 
         user.resetPasswordToken = hashedToken;
-        user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 mins
+        user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+
         await user.save();
 
-        const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+        const resetLink =
+            `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-        // Email config
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -137,17 +148,29 @@ exports.forgotPassword = async (req, res) => {
             `
         });
 
-        res.json({ message: "Password reset link sent to email" });
+        res.json({
+            message: "Password reset link sent to email"
+        });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error("FORGOT PASSWORD ERROR:");
+        console.error(err);
+
+        res.status(500).json({
+            message: err.message
+        });
     }
 };
 
-// ---------------- RESET PASSWORD ----------------
 exports.resetPassword = async (req, res) => {
     const { token } = req.params;
     const { newPassword } = req.body;
+
+    if (!newPassword || newPassword.length < 6) {
+        return res.status(400).json({
+            message: "Password must be at least 6 characters"
+        });
+    }
 
     try {
         const hashedToken = crypto
@@ -161,7 +184,9 @@ exports.resetPassword = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(400).json({ message: "Invalid or expired token" });
+            return res.status(400).json({
+                message: "Invalid or expired token"
+            });
         }
 
         const hashedPw = await bcrypt.hash(newPassword, 10);
@@ -172,9 +197,75 @@ exports.resetPassword = async (req, res) => {
 
         await user.save();
 
-        res.json({ message: "Password reset successful" });
+        res.json({
+            message: "Password reset successful"
+        });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({
+            error: err.message
+        });
+    }
+};
+
+exports.uploadProfilePic = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                message: "No file uploaded"
+            });
+        }
+
+        const user = await User.findById(req.user.userId);
+
+        user.profilePic = `/uploads/${req.file.filename}`;
+        await user.save();
+
+        res.json({
+            message: "Profile picture updated successfully",
+            profilePic: user.profilePic
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: "Profile picture upload failed"
+        });
+    }
+};
+
+exports.getMyFriends = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId)
+            .populate("friends", "username email profilePic");
+
+        res.json({
+            friends: user.friends
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: "Failed to fetch friends"
+        });
+    }
+};
+
+exports.getFriends = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId)
+            .populate("friends", "username _id");
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.json({
+            friends: user.friends
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: "Error fetching friends",
+            error: err.message
+        });
     }
 };

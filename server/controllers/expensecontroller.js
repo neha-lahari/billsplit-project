@@ -3,9 +3,6 @@ const Group = require('../models/groups');
 const Activity = require('../models/activity');
 
 
-// =======================
-// ADD EXPENSE
-// =======================
 exports.addExpense = async (req, res) => {
     const { groupId, amount, category, splitType, participants } = req.body;
 
@@ -23,7 +20,6 @@ exports.addExpense = async (req, res) => {
 
         const groupMemberIds = group.members.map(m => m.toString());
 
-        // 🔥 Validate participants belong to group
         for (let p of participants) {
             if (!groupMemberIds.includes(p.user)) {
                 return res.status(400).json({
@@ -32,7 +28,6 @@ exports.addExpense = async (req, res) => {
             }
         }
 
-        // 🔥 Prevent duplicate participants
         const uniqueUsers = new Set(participants.map(p => p.user));
         if (uniqueUsers.size !== participants.length)
             return res.status(400).json({
@@ -45,11 +40,7 @@ exports.addExpense = async (req, res) => {
             owes: 0
         }));
 
-        // ===============================
-        // SPLIT TYPE LOGIC
-        // ===============================
-
-        // 1️⃣ Equal Split
+       
         if (splitType === "equal") {
 
             const share = Number((totalAmount / formattedParticipants.length).toFixed(2));
@@ -59,7 +50,6 @@ exports.addExpense = async (req, res) => {
             });
         }
 
-        // 2️⃣ Exact Split (Multiple Payers, Equal Share)
         else if (splitType === "exact") {
 
             const share = Number((totalAmount / formattedParticipants.length).toFixed(2));
@@ -69,7 +59,6 @@ exports.addExpense = async (req, res) => {
             });
         }
 
-        // 3️⃣ Percentage Split
         else if (splitType === "percentage") {
 
             const totalPercent = participants.reduce(
@@ -96,7 +85,6 @@ exports.addExpense = async (req, res) => {
             return res.status(400).json({ message: "Invalid split type" });
         }
 
-        // 🔥 Validate total paid equals total amount
         const totalPaid = formattedParticipants.reduce(
             (sum, p) => sum + p.paid,
             0
@@ -136,9 +124,6 @@ exports.addExpense = async (req, res) => {
 };
 
 
-// =======================
-// DELETE EXPENSE
-// =======================
 exports.deleteExpense = async (req, res) => {
     const expenseId = req.params.id;
 
@@ -174,10 +159,6 @@ exports.deleteExpense = async (req, res) => {
 };
 
 
-
-// =======================
-// GET GROUP EXPENSES
-// =======================
 exports.getGroupExpenses = async (req, res) => {
     const { groupId } = req.params;
 

@@ -107,7 +107,6 @@ function GroupPieChart() {
                 return;
             }
 
-            // update UI without reload
             setExpenses((prev) =>
                 prev.filter((exp) => exp._id !== expenseId)
             );

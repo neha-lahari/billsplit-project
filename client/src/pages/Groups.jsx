@@ -1,4 +1,3 @@
-// Groups.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -55,7 +54,6 @@ function Groups() {
     return (
         <div className="text-slate-200">
 
-            {/* Top Section */}
             <div className="flex items-center justify-between mb-10">
                 <div>
                     <h2 className="text-2xl font-semibold text-green-300">
@@ -74,7 +72,6 @@ function Groups() {
                 </button>
             </div>
 
-            {/* Section Title */}
             <h3 className="text-lg font-semibold text-slate-300 mb-6">
                 Your Groups
             </h3>
@@ -92,7 +89,6 @@ function Groups() {
                                 {group.name}
                             </span>
 
-                            {/* Buttons */}
                             <div className="flex items-center gap-3">
 
                                 <button

@@ -10,7 +10,6 @@ function GroupDetails() {
     const [group, setGroup] = useState(null);
     const [balances, setBalances] = useState({});
 
-    // Fetch group details and balances
     useEffect(() => {
         const fetchGroup = async () => {
             try {
@@ -47,7 +46,6 @@ function GroupDetails() {
         fetchBalances();
     }, [groupId]);
 
-    // Remove member
     const handleRemove = async (memberId) => {
         if (!window.confirm("Are you sure you want to remove this member?")) return;
 
@@ -67,7 +65,6 @@ function GroupDetails() {
             const data = await res.json();
             if (!res.ok) return alert(data.message || "Failed to remove");
 
-            // Update frontend state immediately
             setGroup((prev) => ({
                 ...prev,
                 members: prev.members.filter((m) => m._id.toString() !== memberId.toString()),
@@ -76,9 +73,7 @@ function GroupDetails() {
             alert("Something went wrong: " + err.message);
         }
     };
-
-    // Add members (update state after successful API call)
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line
     const handleAddMembers = async (newMemberUsernames) => {
         try {
             const res = await fetch(
@@ -96,7 +91,6 @@ function GroupDetails() {
             const data = await res.json();
             if (!res.ok) return alert(data.message || "Failed to add members");
 
-            // Append new members to frontend state
             setGroup((prev) => ({
                 ...prev,
                 members: [...prev.members, ...data.group.members.filter(
@@ -118,7 +112,6 @@ function GroupDetails() {
     return (
         <div className="px-6 md:px-10 py-8 space-y-10 max-w-7xl mx-auto">
 
-            {/* HEADER */}
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-3xl font-bold text-slate-100 mb-1">{group.name}</h2>

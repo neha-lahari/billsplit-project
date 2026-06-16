@@ -7,15 +7,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: function () {
-            return !this.googleId;   // Only required if NOT Google user
+            return !this.googleId;
         }
     },
 
-    googleId: {
-        type: String,
-        unique: true,
-        sparse: true
-    },
+    googleId: { type: String, unique: true, sparse: true },
     isGoogleUser: { type: Boolean, default: false },
 
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
@@ -33,5 +29,4 @@ const userSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-// ✅ FIX FOR OVERWRITEMODELERROR
 module.exports = mongoose.models.User || mongoose.model('User', userSchema);

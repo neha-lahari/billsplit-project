@@ -62,7 +62,6 @@ function Activity() {
     return (
         <div className="max-w-3xl mx-auto text-slate-200">
 
-            {/* Title */}
             <div className="mb-8">
                 <h2 className="text-xl font-semibold text-green-300">
                     Recent Activity
@@ -92,7 +91,6 @@ function Activity() {
                                     {getMessage(activity)}
                                 </div>
 
-                                {/* Delete Button (only yours) */}
                                 {isMyActivity && (
                                     <button
                                         onClick={() => handleDelete(activity._id)}

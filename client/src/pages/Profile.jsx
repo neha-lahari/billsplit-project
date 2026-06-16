@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
-    // eslint-disable-next-line no-unused-vars
     const [user, setUser] = useState({
         username: "",
         email: "",
@@ -17,7 +16,6 @@ function Profile() {
     const [profilePic, setProfilePic] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
 
-    // ---------------- FETCH PROFILE ----------------
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -64,10 +62,8 @@ function Profile() {
             const updated = await res.json();
             setUser(updated);
 
-            // Optional: update localStorage username if changed
             localStorage.setItem("username", updated.username);
 
-            // Redirect back to account page
             navigate("/dashboard/account");
 
         } catch (err) {
@@ -75,7 +71,7 @@ function Profile() {
             alert("Failed to update profile");
         }
     };
-    // ---------------- UPLOAD PROFILE PIC ----------------
+
     const handleProfilePicUpload = async () => {
         if (!selectedFile) {
             alert("Please select an image first");
@@ -106,7 +102,6 @@ function Profile() {
         }
     };
 
-    // ---------------- UI ----------------
     return (
         <div className="max-w-4xl mx-auto text-slate-200">
 
@@ -122,7 +117,7 @@ function Profile() {
 
             <div className="bg-slate-800/60 border border-green-900/30 rounded-2xl p-8">
 
-                {/* Avatar Section */}
+                {/* Avatar */}
                 <div className="flex flex-col items-center mb-8">
                     <img
                         src={
