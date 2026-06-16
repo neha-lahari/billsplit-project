@@ -1,108 +1,137 @@
-# Bill Split App
-
-A full-stack application to easily split bills among friends, track shared expenses, and settle up with ease.
-
+BillSplit – Smart Expense Sharing App
+BillSplit is a full-stack web application that helps users split expenses, manage groups, track balances, and settle payments easily. It is inspired by apps like Splitwise, built with a modern MERN stack.
 ---
-
-## 📁 Project Structure
-
+📁 Project Structure
 This repository contains two main folders at the root:
-
-- `client/` — Frontend React application
-- `server/` — Backend Node.js/Express API
-
-Below is the recommended folder structure :
-
+`client/` — Frontend React application
+`server/` — Backend Node.js/Express API
 ```
-BILL-SPLIT/
-├── client/
-│   ├── node_modules/
-│   ├── public/
-│   ├── src/
-│   ├── .env
-│   ├── .gitignore
-│   ├── package-lock.json
-│   ├── package.json
-│   └── README.md
-├── server/
+bill-split/
+├── client/              # Frontend (React)
+│   └── src/
+│       ├── pages/
+│       ├── components/
+│       └── assets/
+│
+├── server/              # Backend (Node + Express)
 │   ├── controllers/
-│   ├── middleware/
 │   ├── models/
-│   ├── node_modules/
 │   ├── routes/
-│   ├── .env
-│   ├── index.js
-│   ├── package-lock.json
-│   ├── package.json
-│   └── practice.js
+│   ├── middleware/
+│   └── config/
+│
+└── README.md
 ```
-
 ---
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Setup
-
-#### 1. Clone the repository
-
+🚀 Getting Started
+Prerequisites
+Node.js
+npm
+---
+Setup Instructions
+1️. Clone Repository
 ```bash
-git clone https://github.com/neha-lahari/nehalahari_spider_task2.git
-cd nehalahari_spider_task2
+git clone https://github.com/your-username/billsplit-project.git
+cd billsplit-project
 ```
-
-#### 2. Install dependencies
-
-Install both client and server dependencies:
-
-```bash
-cd client
-npm install
-cd ../server
-npm install
-```
-
-#### 3. Environment Variables
-
-Create a `.env` file in both `client/` and `server/` folders.
-
-Example `.env` for `server/`:
-```
-PORT=5000
-MONGO_URI=your_mongodb_uri_here
-JWT_SECRET=your_jwt_secret
-```
-
-#### 4. Running the app
-
-##### Start the backend server (with nodemon):
-
+---
+2️.Backend Setup
 ```bash
 cd server
-nodemon index.js
+npm install
 ```
-
-##### Start the frontend app:
-
-Open a new terminal, then:
-
+Create `.env` file:
+```
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/billsplit
+JWT_secret=your_secret_key
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+FRONTEND_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+Run backend:
 ```bash
-cd client
 npm start
 ```
-
+---
+3️⃣ Frontend Setup
+```bash
+cd client
+npm install
+npm start
+```
+---
+✨ Features
+🔐 Authentication
+Email + Password login  
+Google OAuth login  
+JWT-based authentication  
+Forgot Password with email reset link  
+Secure password reset flow (token-based)
+---
+👥 Friends System
+Add and manage friends  
+View friend list with profile details
+---
+🧾 Group Expense Management
+Create groups  
+Add members to groups  
+Add expenses within groups  
+Automatic balance calculation  
+See who owes whom
+---
+💰 Expense Tracking
+Split expenses equally  
+Category-wise expense tracking  
+Per-group balance breakdown  
+Real-time updates
+---
+📊 Dashboard
+Overview of groups  
+Recent activity feed  
+Quick navigation to groups & friends
+---
+🖼️ Profile
+Update profile info  
+Upload profile picture
+---
+🔑 Authentication Flow
+User registers or logs in  
+Server generates JWT token  
+Token stored in localStorage  
+Protected routes use token validation  
+Forgot password sends email reset link  
+Reset password updates hashed password
+---
+📧 Forgot Password Flow
+User enters email  
+Server generates reset token  
+Email sent via Nodemailer (Gmail SMTP)  
+User clicks link → redirected to reset page  
+New password is saved securely (bcrypt hashed)
+---
+🧠 Tech Stack
+Frontend
+React.js  
+React Router DOM  
+Tailwind CSS  
+Context API / Hooks  
+Fetch API
+Backend
+Node.js  
+Express.js  
+MongoDB + Mongoose  
+JWT Authentication  
+bcrypt.js  
+Nodemailer (for email service)  
+Passport.js (Google OAuth)
 ---
 
-## ✨ Features
-
-- Add participants
-- Create groups
-- Add and split expenses
-- Track balances and settlements
-- Simple and intuitive UI
-
 ---
+👨‍💻 Author
+Neha Lahari  
+GitHub: https://github.com/neha-lahari
+---
+⭐ If you like this project, give it a star on GitHub!
