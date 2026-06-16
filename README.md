@@ -1,12 +1,12 @@
 ---
 
-# 💸 BillSplit – Smart Expense Sharing App
+# BillSplit – Smart Expense Sharing App
 
 BillSplit is a full-stack web application that helps users split expenses, manage groups, track balances, and settle payments easily. It is inspired by apps like Splitwise, built with a modern MERN stack.
 
 ---
 
-## 📁 **Project Structure**
+## **Project Structure**
 
 This repository contains two main folders at the root:
 
@@ -33,7 +33,7 @@ bill-split/
 ```
 ---
 
-## 🚀 **Getting Started**
+## **Getting Started**
 
 ### Prerequisites
 
@@ -42,7 +42,7 @@ npm
 
 ---
 
-## ⚙️ **Setup Instructions**
+## **Setup Instructions**
 
 ### 1. Clone Repository
 
@@ -91,9 +91,9 @@ npm start
 
 ---
 
-## ✨ **Features**
+## **Features**
 
-### 🔐 Authentication
+### Authentication
 
 Email + Password login
 Google OAuth login
@@ -103,14 +103,14 @@ Secure password reset flow (token-based)
 
 ---
 
-### 👥 Friends System
+### Friends System
 
 Add and manage friends
 View friend list with profile details
 
 ---
 
-### 🧾 Group Expense Management
+### Group Expense Management
 
 Create groups
 Add members to groups
@@ -120,7 +120,7 @@ See who owes whom
 
 ---
 
-### 💰 Expense Tracking
+### Expense Tracking
 
 Split expenses equally
 Category-wise expense tracking
@@ -129,7 +129,7 @@ Real-time updates
 
 ---
 
-### 📊 Dashboard
+### Dashboard
 
 Overview of groups
 Recent activity feed
@@ -137,14 +137,14 @@ Quick navigation to groups & friends
 
 ---
 
-### 🖼️ Profile
+### Profile
 
 Update profile info
 Upload profile picture
 
 ---
 
-## 🔑 **Authentication Flow**
+### **Authentication Flow**
 
 User registers or logs in
 Server generates JWT token
@@ -155,7 +155,7 @@ Reset password updates hashed password
 
 ---
 
-## 📧 **Forgot Password Flow**
+## **Forgot Password Flow**
 
 User enters email
 Server generates reset token
@@ -165,7 +165,7 @@ New password is saved securely (bcrypt hashed)
 
 ---
 
-## 🧠 **Tech Stack**
+## **Tech Stack**
 
 ### Frontend
 
