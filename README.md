@@ -1,5 +1,3 @@
-Here’s your cleaned README with **only headings bolded** and everything else in a clean, consistent format:
-
 ---
 
 # 💸 BillSplit – Smart Expense Sharing App
