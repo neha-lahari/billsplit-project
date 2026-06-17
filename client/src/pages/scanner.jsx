@@ -5,7 +5,6 @@ function ScanQR() {
     return (
         <div className="max-w-3xl mx-auto text-slate-200">
 
-            {/* Title */}
             <div className="mb-8">
                 <h2 className="text-xl font-semibold text-green-300">
                     Login QR Code
@@ -15,11 +14,10 @@ function ScanQR() {
                 </p>
             </div>
 
-            {/* QR Card */}
             <div className="bg-slate-800/60 border border-green-900/30 rounded-2xl p-10 flex justify-center">
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                     <QRCodeSVG
-                        value="http://localhost:3000/"
+                        value={`${process.env.REACT_APP_FRONTEND_URL}/`}
                         size={220}
                     />
                 </div>

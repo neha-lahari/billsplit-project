@@ -2,13 +2,20 @@ import React, { useEffect, useState } from "react";
 
 function Activity() {
     const [activities, setActivities] = useState([]);
+
+    const API_URL = process.env.REACT_APP_API_URL;
+
     const fetchActivities = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/activity", {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
+            const res = await fetch(
+                `${API_URL}/api/activity`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+
             const data = await res.json();
             setActivities(data.activities || []);
         } catch (err) {
@@ -19,21 +26,28 @@ function Activity() {
     useEffect(() => {
         fetchActivities();
     }, []);
+
     const handleDelete = async (id) => {
-        const confirm = window.confirm("Delete this activity?");
-        if (!confirm) return;
+        const confirmed = window.confirm("Delete this activity?");
+        if (!confirmed) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/api/activity/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
+            const res = await fetch(
+                `${API_URL}/api/activity/${id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+
             const data = await res.json();
+
             if (!res.ok) {
                 alert(data.message || "Error deleting activity");
             }
+
             setActivities((prev) => prev.filter((a) => a._id !== id));
         } catch (err) {
             console.error("Error deleting activity:", err);
@@ -59,6 +73,7 @@ function Activity() {
                 return `${name} did something`;
         }
     };
+
     return (
         <div className="max-w-3xl mx-auto text-slate-200">
 
@@ -86,7 +101,6 @@ function Activity() {
                                 key={activity._id}
                                 className="flex items-center justify-between bg-slate-800/60 border border-green-900/30 rounded-xl px-5 py-4 hover:border-green-500/40 transition duration-200"
                             >
-                                {/* Message */}
                                 <div className="text-sm text-slate-300">
                                     {getMessage(activity)}
                                 </div>
@@ -106,6 +120,6 @@ function Activity() {
             )}
         </div>
     );
-
 }
-export default Activity
+
+export default Activity;

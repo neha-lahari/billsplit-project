@@ -12,10 +12,10 @@ export default function Register() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        setErrorMsg(""); 
+        setErrorMsg("");
 
         try {
-            const res = await fetch("http://localhost:5000/api/users/register", {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password }),
@@ -33,21 +33,21 @@ export default function Register() {
 
         } catch (err) {
             setErrorMsg(err.message);
-            setTimeout(() => setErrorMsg(""), 6000); 
+            setTimeout(() => setErrorMsg(""), 6000);
         }
     };
 
     const handleGoogleRegister = () => {
 
         const googleWindow = window.open(
-            "http://localhost:5000/api/auth/google/register",
+            `${process.env.REACT_APP_API_URL}/api/auth/google/register`,
             "_blank",
             "width=500,height=600"
         );
 
         const handleMessage = (event) => {
 
-            if (event.origin !== "http://localhost:5000") return;
+            if (event.origin !== process.env.REACT_APP_API_URL) return;
 
             if (event.data.error) {
                 setErrorMsg(event.data.error);

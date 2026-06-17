@@ -27,7 +27,7 @@ export default function ResetPassword() {
             setLoading(true);
 
             const res = await fetch(
-                `http://localhost:5000/api/users/reset-password/${token}`,
+                `${process.env.REACT_APP_API_URL}/api/users/reset-password/${token}`,
                 {
                     method: "POST",
                     headers: {
@@ -81,10 +81,7 @@ export default function ResetPassword() {
                 </div>
 
                 {/* Form */}
-                <form
-                    onSubmit={handleReset}
-                    className="flex flex-col gap-4"
-                >
+                <form onSubmit={handleReset} className="flex flex-col gap-4">
 
                     <input
                         type="password"
@@ -92,18 +89,7 @@ export default function ResetPassword() {
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         required
-                        className="
-                            bg-black/30
-                            border border-green-500/30
-                            text-green-100
-                            placeholder-green-700
-                            rounded-lg
-                            px-4
-                            py-3
-                            focus:outline-none
-                            focus:ring-1
-                            focus:ring-green-500
-                        "
+                        className="bg-black/30 border border-green-500/30 text-green-100 placeholder-green-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-1 focus:ring-green-500"
                     />
 
                     <input
@@ -112,33 +98,13 @@ export default function ResetPassword() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        className="
-                            bg-black/30
-                            border border-green-500/30
-                            text-green-100
-                            placeholder-green-700
-                            rounded-lg
-                            px-4
-                            py-3
-                            focus:outline-none
-                            focus:ring-1
-                            focus:ring-green-500
-                        "
+                        className="bg-black/30 border border-green-500/30 text-green-100 placeholder-green-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-1 focus:ring-green-500"
                     />
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="
-                            bg-green-500
-                            hover:bg-green-400
-                            disabled:opacity-60
-                            text-black
-                            font-bold
-                            py-3
-                            rounded-lg
-                            transition-colors
-                        "
+                        className="bg-green-500 hover:bg-green-400 disabled:opacity-60 text-black font-bold py-3 rounded-lg transition-colors"
                     >
                         {loading ? "Resetting..." : "Reset Password"}
                     </button>
@@ -149,13 +115,7 @@ export default function ResetPassword() {
                 <div className="text-center">
                     <button
                         onClick={() => navigate("/login")}
-                        className="
-                            text-green-400
-                            hover:text-green-300
-                            underline
-                            text-sm
-                            transition-colors
-                        "
+                        className="text-green-400 hover:text-green-300 underline text-sm transition-colors"
                     >
                         Back to Login
                     </button>

@@ -9,6 +9,8 @@ import {
     ResponsiveContainer,
 } from "recharts";
 
+const API = process.env.REACT_APP_API_URL;
+
 const COLORS = [
     "#22c55e", "#16a34a", "#4ade80", "#15803d",
     "#34d399", "#059669", "#10b981", "#065f46",
@@ -26,10 +28,11 @@ function GroupPieChart() {
                 const token = localStorage.getItem("token");
 
                 const groupRes = await fetch(
-                    `http://localhost:5000/api/groups/${groupId}`,
+                    `${API}/api/groups/${groupId}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 const groupData = await groupRes.json();
+
                 const members = groupData.group?.members || [];
 
                 const memberMap = {};
@@ -38,9 +41,10 @@ function GroupPieChart() {
                 });
 
                 const expRes = await fetch(
-                    `http://localhost:5000/api/expenses/group/${groupId}`,
+                    `${API}/api/expenses/group/${groupId}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
+
                 const expData = await expRes.json();
                 const expensesList = expData.expenses || [];
                 setExpenses(expensesList);
@@ -93,7 +97,7 @@ function GroupPieChart() {
 
         try {
             const res = await fetch(
-                `http://localhost:5000/api/expenses/${expenseId}`,
+                `${API}/api/expenses/${expenseId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -129,10 +133,8 @@ function GroupPieChart() {
                 </div>
             ) : (
                 <>
-                    {/* CHARTS */}
                     <div className="grid md:grid-cols-2 gap-10">
 
-                        {/* CATEGORY PIE */}
                         <div className="bg-slate-900 p-6 rounded-2xl shadow-lg">
                             <h4 className="text-slate-300 mb-4 font-medium">
                                 By Category
@@ -160,7 +162,6 @@ function GroupPieChart() {
                             </ResponsiveContainer>
                         </div>
 
-                        {/* PAID BY */}
                         <div className="bg-slate-900 p-6 rounded-2xl shadow-lg">
                             <h4 className="text-slate-300 mb-4 font-medium">
                                 Paid By
@@ -190,7 +191,6 @@ function GroupPieChart() {
                         </div>
                     </div>
 
-                    {/* EXPENSE LIST */}
                     <div className="bg-slate-800 p-6 rounded-2xl shadow-md space-y-4">
                         <h4 className="text-slate-300 font-medium">
                             All Expenses

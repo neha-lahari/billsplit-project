@@ -8,13 +8,14 @@ export default function Login() {
     const [errorMsg, setErrorMsg] = useState("");
 
     const navigate = useNavigate();
+    const API = process.env.REACT_APP_API_URL;
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMsg("");
 
         try {
-            const res = await fetch("http://localhost:5000/api/users/login", {
+            const res = await fetch(`${API}/api/users/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -30,7 +31,6 @@ export default function Login() {
             localStorage.setItem("userId", data.user._id);
 
             navigate("/dashboard/groups");
-
         } catch (err) {
             setErrorMsg(err.message);
             setTimeout(() => setErrorMsg(""), 6000);
@@ -38,16 +38,15 @@ export default function Login() {
     };
 
     const handleGoogleLogin = () => {
-
         const googleWindow = window.open(
-            "http://localhost:5000/api/auth/google/login",
+            `${API}/api/auth/google/login`,
             "_blank",
             "width=500,height=600"
         );
 
         const handleMessage = (event) => {
-
-            if (event.origin !== "http://localhost:5000") return;
+            // safer origin check (CRA + deployed apps)
+            if (!API.startsWith(event.origin)) return;
 
             if (event.data.error) {
                 setErrorMsg(event.data.error);
@@ -110,7 +109,6 @@ export default function Login() {
                         required
                     />
 
-                    {/* Forgot Password Link */}
                     <div className="text-right">
                         <span
                             className="text-green-400 text-sm cursor-pointer hover:underline"

@@ -8,11 +8,14 @@ function Account() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/users/profile", {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                });
+                const res = await fetch(
+                    `${process.env.REACT_APP_API_URL}/api/users/profile`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        },
+                    }
+                );
 
                 if (!res.ok) throw new Error("Failed to fetch");
 
@@ -58,7 +61,7 @@ function Account() {
                     <img
                         src={
                             user.profilePic
-                                ? `http://localhost:5000${user.profilePic}`
+                                ? `${process.env.REACT_APP_API_URL}${user.profilePic}`
                                 : "https://via.placeholder.com/60"
                         }
                         alt="Avatar"

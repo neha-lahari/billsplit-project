@@ -9,6 +9,8 @@ export default function ForgotPassword() {
 
     const navigate = useNavigate();
 
+    const API = process.env.REACT_APP_API_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
@@ -16,7 +18,7 @@ export default function ForgotPassword() {
 
         try {
             const res = await fetch(
-                "http://localhost:5000/api/users/forgot-password",
+                `${API}/api/users/forgot-password`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -48,7 +50,6 @@ export default function ForgotPassword() {
                     </div>
                 )}
 
-                {/* Logo */}
                 <div className="text-center">
                     <img
                         src={fingerprint}
@@ -66,60 +67,30 @@ export default function ForgotPassword() {
                     </p>
                 </div>
 
-                {/* Form */}
-                <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col gap-4"
-                >
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
                     <input
                         type="email"
                         placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="
-                            bg-black/30
-                            border border-green-500/30
-                            text-green-100
-                            placeholder-green-700
-                            rounded-lg
-                            px-4
-                            py-3
-                            focus:outline-none
-                            focus:ring-1
-                            focus:ring-green-500
-                        "
+                        className="bg-black/30 border border-green-500/30 text-green-100 placeholder-green-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-1 focus:ring-green-500"
                     />
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="
-                            bg-green-500
-                            hover:bg-green-400
-                            disabled:opacity-60
-                            text-black
-                            font-bold
-                            py-3
-                            rounded-lg
-                            transition-colors
-                        "
+                        className="bg-green-500 hover:bg-green-400 disabled:opacity-60 text-black font-bold py-3 rounded-lg transition-colors"
                     >
                         {loading ? "Sending Link..." : "Send Reset Link"}
                     </button>
                 </form>
 
-                {/* Back to Login */}
                 <div className="text-center">
                     <button
                         onClick={() => navigate("/login")}
-                        className="
-                            text-green-400
-                            hover:text-green-300
-                            underline
-                            text-sm
-                            transition-colors
-                        "
+                        className="text-green-400 hover:text-green-300 underline text-sm transition-colors"
                     >
                         Back to Login
                     </button>

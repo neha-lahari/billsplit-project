@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API = process.env.REACT_APP_API_URL;
+
 function Profile() {
     const [user, setUser] = useState({
         username: "",
@@ -20,7 +22,7 @@ function Profile() {
         const fetchProfile = async () => {
             try {
                 const res = await fetch(
-                    "http://localhost:5000/api/users/profile",
+                    `${API}/api/users/profile`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,7 +48,7 @@ function Profile() {
     const handleSave = async () => {
         try {
             const res = await fetch(
-                "http://localhost:5000/api/users/profile",
+                `${API}/api/users/profile`,
                 {
                     method: "PUT",
                     headers: {
@@ -83,7 +85,7 @@ function Profile() {
 
         try {
             const res = await fetch(
-                "http://localhost:5000/api/users/upload-profile-pic",
+                `${API}/api/users/upload-profile-pic`,
                 {
                     method: "POST",
                     headers: {
@@ -105,7 +107,6 @@ function Profile() {
     return (
         <div className="max-w-4xl mx-auto text-slate-200">
 
-            {/* Header */}
             <div className="mb-8">
                 <h2 className="text-xl font-semibold text-green-300">
                     Edit Profile
@@ -117,12 +118,11 @@ function Profile() {
 
             <div className="bg-slate-800/60 border border-green-900/30 rounded-2xl p-8">
 
-                {/* Avatar */}
                 <div className="flex flex-col items-center mb-8">
                     <img
                         src={
                             profilePic
-                                ? `http://localhost:5000${profilePic}`
+                                ? `${API}${profilePic}`
                                 : "https://via.placeholder.com/120"
                         }
                         alt="Profile"
@@ -144,7 +144,6 @@ function Profile() {
                     </button>
                 </div>
 
-                {/* User Info */}
                 <div className="space-y-5 max-w-md mx-auto">
 
                     <div>
