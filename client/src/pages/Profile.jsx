@@ -123,7 +123,7 @@ function Profile() {
                         src={
                             profilePic
                                 ? `${API}${profilePic}`
-                                : "https://via.placeholder.com/120"
+                                : "https://placehold.co/120"
                         }
                         alt="Profile"
                         className="w-28 h-28 rounded-full object-cover border border-green-400/30 mb-4"

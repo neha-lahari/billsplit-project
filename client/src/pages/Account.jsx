@@ -62,7 +62,7 @@ function Account() {
                         src={
                             user.profilePic
                                 ? `${process.env.REACT_APP_API_URL}${user.profilePic}`
-                                : "https://via.placeholder.com/60"
+                                : "https://placehold.co/60"
                         }
                         alt="Avatar"
                         className="w-14 h-14 rounded-full object-cover border border-green-400/30"
