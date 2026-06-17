@@ -1,5 +1,5 @@
 const Group = require("../models/groups");
-const User = require("../models/User");
+const User = require("../models/user");
 const Activity = require("../models/activity");
 
 exports.createGroup = async (req, res) => {
