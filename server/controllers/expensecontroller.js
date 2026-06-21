@@ -40,27 +40,17 @@ exports.addExpense = async (req, res) => {
             owes: 0
         }));
 
-       
         if (splitType === "equal") {
-
             const share = Number((totalAmount / formattedParticipants.length).toFixed(2));
-
-            formattedParticipants.forEach(p => {
-                p.owes = share;
-            });
+            formattedParticipants.forEach(p => { p.owes = share; });
         }
 
         else if (splitType === "exact") {
-
             const share = Number((totalAmount / formattedParticipants.length).toFixed(2));
-
-            formattedParticipants.forEach(p => {
-                p.owes = share;
-            });
+            formattedParticipants.forEach(p => { p.owes = share; });
         }
 
         else if (splitType === "percentage") {
-
             const totalPercent = participants.reduce(
                 (sum, p) => sum + Number(p.percentage || 0),
                 0
